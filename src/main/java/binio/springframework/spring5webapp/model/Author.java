@@ -2,10 +2,7 @@ package binio.springframework.spring5webapp.model;
 
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +14,9 @@ public class Author {
     private Long id;
     private String firstName;
     private String lastName;
-    private Set<Book> books = new HashSet<>();
+
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books  = new HashSet<>();
 
     public Author() {
     }
