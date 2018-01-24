@@ -14,13 +14,6 @@ public class Publisher {
     private Long id;
     private String name;
 
-    public Publisher() {
-    }
-
-    public Publisher(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }
@@ -36,4 +29,20 @@ public class Publisher {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Publisher publisher = (Publisher) o;
+
+        return id != null ? id.equals(publisher.id) : publisher.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }
