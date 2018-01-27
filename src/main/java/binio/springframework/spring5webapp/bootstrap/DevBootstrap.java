@@ -25,31 +25,28 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent>{
 
     private void initData(){
 
-        Publisher publisherA = new Publisher();
-        publisherA.setName("Manning");
-        Publisher publisherB = new Publisher();
-        publisherB.setName("Pact");
-        publisherRepository.save(publisherA);
-        publisherRepository.save(publisherB);
+        Publisher publisher = new Publisher();
+        publisher.setName("foo");
+        publisherRepository.save(publisher);
+
+        //Eric
+        Author eric = new Author("Eric", "Evans");
+        Book  ddd = new Book("Domain Driven Design", "1234", publisher);
+        eric.getBooks().add(ddd);
+        ddd.getAuthors().add(eric);
+
+        authorRepository.save(eric);
+        bookRepository.save(ddd);
 
 
-        Author authorM = new Author("Mark","Evans");
-        Book bookOne = new Book("Programming in JAVA", "AHGA0191817", publisherA);
+        //Rod
+        Author rod = new Author("Rod", "Johnson");
+        Book noEJB = new Book("J2EE Development without EJB", "23444", publisher );
+        rod.getBooks().add(noEJB);
+        noEJB.getAuthors().add(rod);
 
-        authorM.getBooks().add(bookOne);
-        bookOne.getAuthors().add(authorM);
-
-        authorRepository.save(authorM);
-        bookRepository.save(bookOne);
-
-        Author authorA = new Author("Adam","Evans");
-        Book bookTwo = new Book("Programming in C++", "AHGA0100017", publisherB);
-
-        authorA.getBooks().add(bookTwo);
-        bookTwo.getAuthors().add(authorA);
-
-        authorRepository.save(authorA);
-        bookRepository.save(bookTwo);
+        authorRepository.save(rod);
+        bookRepository.save(noEJB);
     }
 
     @Override
