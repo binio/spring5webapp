@@ -1,55 +1,42 @@
 package binio.springframework.spring5webapp.model;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
+@IdClass(value = ResultDefinitionKey.class)
 public class ResultDefinition {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    private String desCription;
 
-    @Column(name = "result_definition_word_group")
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<ResultWordGroup> wordGroup;
+    @JoinColumns( {
+            @JoinColumn(name = "result_definition_id", referencedColumnName = "id" ),
+            @JoinColumn(name = "result_definition_version", referencedColumnName = "version")
+    })
+    private List<ResultPrompt> prompts;
+
+    @Id
+    @Column(name = "version")
+    private ZonedDateTime version;
 
     public ResultDefinition() {
     }
 
-    public ResultDefinition(String name, String description, List<ResultWordGroup> wordGroup) {
-        this.name = name;
-        this.description = description;
-        this.wordGroup = wordGroup;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public ResultDefinition(UUID id, String name, String description, List<ResultPrompt> prompts, ZonedDateTime version) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        this.desCription = description;
+        this.prompts = prompts;
+        this.version = version;
     }
 }
